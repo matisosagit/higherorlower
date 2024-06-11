@@ -21,7 +21,29 @@ body {
     position: relative;
     width: 50%;
     height: 100%;
+    transition: transform 0.5s ease-in-out;
 }
+
+.transicion-horizontal {
+    transform: translateX(-100%);
+}
+
+.resetear-posicion-horizontal {
+    transform: translateX(100%);
+}
+
+.transicion-vertical {
+    transform: translateY(-100%);
+}
+
+.resetear-posicion-vertical {
+    transform: translateY(100%);
+}
+
+.ocultar {
+    display: none;
+}
+
 
 .player1 img, .player2 img {
     width: 100%;
@@ -47,7 +69,7 @@ body {
     transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
-    gap: 1rem; /* Añade espacio entre los botones */
+    gap: 1rem; 
 }
 
 .btn10 {
@@ -160,6 +182,17 @@ h1 {
     align-items: center;
 }
 
+
+.transicion-imagen {
+    transition: transform 0.5s ease-in-out;
+    transform: translateX(100%);
+}
+
+img.cambiando {
+    transform: translateX(0);
+}
+
+
 @media only screen and (max-width: 600px) {
     #abc {
         flex-direction: column;
@@ -169,10 +202,17 @@ h1 {
         width: 100%;
         height: 50%;
     }
+    
+    .transicion-vertical {
+        transform: translateY(-100%);
+    }
+    
+    .resetear-posicion-vertical {
+        transform: translateY(100%);
+    }
 
     .player1 img, .player2 img {
         max-height: 100%;
     }
 }
-
 
