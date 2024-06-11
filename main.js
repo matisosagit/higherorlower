@@ -20,7 +20,7 @@ var arrayimagenes = [
     ["Germán Hornos",25, "hornos.jpeg"],
     ["Eliomar Marcon", 21, "eliomar.jpg"],
     ["Javier Chevantón", 33, "javier.jpg"],
-    ["Gabriel Alve", 24, "gabriel.jpeg"],
+    ["Gabriel Alvez", 24, "gabriel.jpeg"],
     ["Martín Rodríguez", 13, "martin.jpg"],
     ["Pablo Bengoechea", 10, "bengoechea.jpg"],
     ["Juan González", 16, "juan.jpg"],
@@ -108,12 +108,19 @@ function actualizarElementos() {
     tt2.innerText = texto2 + " hizo: " + g2 + " goles";
 }
 
-function mayor() {
-    if ( (g2 >= g1) && (arraycopia.length > 0)) {
+function moverYActualizar(orientacion) {
+    var transicionClase = (orientacion === 'horizontal') ? 'transicion-horizontal' : 'transicion-vertical';
+    var resetearClase = (orientacion === 'horizontal') ? 'resetear-posicion-horizontal' : 'resetear-posicion-vertical';
+
+    document.getElementById("player2").classList.add(transicionClase);
+    document.getElementById("player1").classList.add(transicionClase);
+
+    setTimeout(function() {
         imgElement1.src = imgSrc2;
         tt1.innerText = texto2 + " hizo: " + g2 + " goles";
         g1 = g2;
-        puntaje++;
+
+        document.getElementById("player2").classList.add('ocultar');
 
         var m = Math.floor(Math.random() * arraycopia.length);
         imgSrc2 = arraycopia[m][2];
@@ -122,6 +129,27 @@ function mayor() {
         tt2.innerText = texto2 + " hizo:";
         g2 = arraycopia[m][1];
         arraycopia.splice(m, 1);
+
+        document.getElementById("player1").classList.remove(transicionClase);
+        document.getElementById("player1").classList.add(resetearClase);
+        document.getElementById("player2").classList.remove(transicionClase, 'ocultar');
+        document.getElementById("player2").classList.add(resetearClase);
+
+        setTimeout(function() {
+            document.getElementById("player1").classList.remove(resetearClase);
+            document.getElementById("player2").classList.remove(resetearClase);
+        }, 50);
+    }, 500);
+}
+
+function detectarOrientacion() {
+    return (window.innerWidth > window.innerHeight) ? 'horizontal' : 'vertical';
+}
+
+function mayor() {
+    if ((g2 >= g1) && (arraycopia.length > 0)) {
+        moverYActualizar(detectarOrientacion());
+        puntaje++;
     } else {
         terminarjuego();
     }
@@ -129,19 +157,11 @@ function mayor() {
 
 function menor() {
     if ((g2 <= g1) && (arraycopia.length > 0)) {
-        imgElement1.src = imgSrc2;
-        tt1.innerText = texto2 + " hizo: " + g2 + " goles";
-        g1 = g2;
+        moverYActualizar(detectarOrientacion());
         puntaje++;
-
-        var m = Math.floor(Math.random() * arraycopia.length);
-        imgSrc2 = arraycopia[m][2];
-        imgElement2.src = imgSrc2;
-        texto2 = arraycopia[m][0];
-        tt2.innerText = texto2 + " hizo:";
-        g2 = arraycopia[m][1];
-        arraycopia.splice(m, 1);
     } else {
         terminarjuego();
     }
 }
+
+
